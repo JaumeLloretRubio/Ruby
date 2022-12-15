@@ -15,7 +15,7 @@ public class RubyControler : MonoBehaviour
     float invincibleTimer;
     Animator animator;
     Vector2 lookDirection = new Vector2(1,0);
-
+    AudioSource audioSource;
     Rigidbody2D rigidbody2d;
     // Start is called before the first frame update
     void Start()
@@ -25,8 +25,13 @@ public class RubyControler : MonoBehaviour
         rigidbody2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
+        audioSource= GetComponent<AudioSource>();
     }
 
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -76,6 +81,7 @@ public class RubyControler : MonoBehaviour
         }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);
+        UiHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
     }
 
     void Launch()
